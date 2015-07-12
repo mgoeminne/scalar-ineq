@@ -4,7 +4,8 @@ package org.scalar
 package object ineq
 {
    /**
-    * Computes the Gini index of values
+    * Computes the Gini index of given values.
+    * https://en.wikipedia.org/wiki/Gini_coefficient
     * @param values the values for which the Gini index must be computed
     * @param unbiased true if the data values are unbiased, and should therefore not be corrected; false otherwise
     * @return the Gini index associated to the given values
@@ -28,8 +29,15 @@ package object ineq
       else g
    }
 
+   /**
+    * Computes the Theil index for some given values.
+    * https://en.wikipedia.org/wiki/Theil_index
+    * @param values the values for which the Gini index must be computed
+    * @return the Theil index associated to the given values
+    */
    def theil(values: Iterable[Double]): Double =
    {
-
+      val mean = values.sum / values.size
+      values.fold(0.0){(old,next) => old + (next/mean)* Math.log(next/mean)} / values.size
    }
 }
