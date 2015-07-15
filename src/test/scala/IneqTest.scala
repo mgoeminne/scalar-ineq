@@ -1,6 +1,8 @@
 import org.scalar.ineq
 import org.scalatest._
 
+import scala.util.Random
+
 class IneqTest extends FlatSpec with Matchers
 {
    private val EPSILON = 0.000001
@@ -24,6 +26,20 @@ class IneqTest extends FlatSpec with Matchers
    it should "have the right Theil index" in {
       ineq.theil(CRAN_VECTOR) shouldBe (0.3623412) +- EPSILON
    }
+
+   it should "have the right Atkinson index" in {
+      ineq.atkinson(CRAN_VECTOR) shouldBe (0.1796591) +- EPSILON
+      ineq.atkinson(CRAN_VECTOR, 1) shouldBe (0.3518251) +- EPSILON
+      ineq.atkinson(CRAN_VECTOR, 0.4) shouldBe (0.1440938) +- EPSILON
+   }
+
+   "The Atkinson index, with a parameter of 0" should "be 0" in {
+      ineq.atkinson(CRAN_VECTOR, 0.0) shouldBe (0.0) +- EPSILON
+      ineq.atkinson(Seq.fill(50)(Random.nextDouble()), 0.0) shouldBe (0.0) +- EPSILON
+   }
+
+
+
 
 
 

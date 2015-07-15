@@ -40,4 +40,14 @@ package object ineq
       val mean = values.sum / values.size
       values.fold(0.0){(old,next) => old + (next/mean)* Math.log(next/mean)} / values.size
    }
+
+   def atkinson(values: Iterable[Double], parameter: Double = 0.5): Double =
+   {
+      val mean = values.sum / values.size
+
+      if(parameter == 1)
+         1.0 - (1.0/mean) * math.pow(values.product , (1.0 / values.size))
+      else
+         1.0 - (1.0/mean) * math.pow( values.map(y => math.pow(y, 1.0 - parameter)).sum / values.size, (1.0 / (1.0 - parameter)))
+   }
 }
