@@ -41,6 +41,15 @@ package object ineq
       values.fold(0.0){(old,next) => old + (next/mean)* Math.log(next/mean)} / values.size
    }
 
+   /**
+    * Computes the Atkinson's index for some given values.
+    * https://en.wikipedia.org/wiki/Atkinson_index
+    * @param values the values for which the Gini index must be computed
+    * @param parameter a coefficient expressing the "inequality aversion". If 0, no aversion to inequality is considered,
+    *                  and the index equals to 0.
+    *                  As the coefficient value increases, the social utility gained by a total redistribution increases.
+    * @return the Atkinson index associated to the given values
+    */
    def atkinson(values: Iterable[Double], parameter: Double = 0.5): Double =
    {
       val mean = values.sum / values.size
@@ -50,4 +59,5 @@ package object ineq
       else
          1.0 - (1.0/mean) * math.pow( values.map(y => math.pow(y, 1.0 - parameter)).sum / values.size, (1.0 / (1.0 - parameter)))
    }
+
 }
