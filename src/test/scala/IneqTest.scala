@@ -8,7 +8,7 @@ class IneqTest extends FlatSpec with Matchers
    private val EPSILON = 0.000001
    val CRAN_VECTOR = Seq(541, 1463, 2445, 3438, 4437, 5401, 6392, 8304, 11904, 22261).map(_.toDouble)
 
-   "The Gini index of a single value" should "be 0" in {
+   "Gini index of a single value" should "be 0" in {
       ineq.gini(Seq(42.0)) shouldBe (0.0) +- EPSILON
    }
 
@@ -40,9 +40,14 @@ class IneqTest extends FlatSpec with Matchers
       ineq.entropy(CRAN_VECTOR, 0.723) shouldBe (0.3663712) +- EPSILON
    }
 
-   "The Atkinson index, with a parameter of 0" should "be 0" in {
+   "Atkinson index, with a parameter of 0" should "be 0" in {
       ineq.atkinson(CRAN_VECTOR, 0.0) shouldBe (0.0) +- EPSILON
       ineq.atkinson(Seq.fill(50)(Random.nextDouble()), 0.0) shouldBe (0.0) +- EPSILON
+   }
+
+   "Normalized Theil index" should "be between 0 and 1" in {
+      assert( ineq.normalized_theil(CRAN_VECTOR) >= 0)
+      assert( ineq.normalized_theil(CRAN_VECTOR) <= 1)
    }
 
 

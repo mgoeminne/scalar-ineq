@@ -16,12 +16,9 @@ package object ineq
       val ox = values.toSeq.sorted
 
       val oxi = ox.zipWithIndex.map(e => (e._1, e._2 + 1))
-      println(oxi)
 
       val num = 2 * oxi.map(e => e._1 * e._2).sum
-      println("num : " + num)
       val den = n * ox.sum
-      println("denum : " + den)
 
       val g = (num / den) - ((n+1) / n)
 
@@ -41,7 +38,13 @@ package object ineq
       values.map(y => y/mean * Math.log(y/mean)).sum / values.size
    }
 
-   def normalized_theil(values: Iterable[Double]): Double = ???
+   /**
+    * Computes the normalized Theil index.
+    * @param values the values for which the Gini index must be computed
+    * @return the normalized Theil index associated to the given values, a value between 0 and 1
+    */
+   def normalized_theil(values: Iterable[Double]): Double = theil(values) / math.log(values.size)
+
 
 
    /**
