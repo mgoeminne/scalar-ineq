@@ -38,8 +38,11 @@ package object ineq
    def theil(values: Iterable[Double]): Double =
    {
       val mean = values.sum / values.size
-      values.fold(0.0){(old,next) => old + (next/mean)* Math.log(next/mean)} / values.size
+      values.map(y => y/mean * Math.log(y/mean)).sum / values.size
    }
+
+   def normalized_theil(values: Iterable[Double]): Double = ???
+
 
    /**
     * Computes the Atkinson's index for some given values.
