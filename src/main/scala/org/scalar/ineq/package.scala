@@ -109,6 +109,19 @@ package object ineq
       vc * vc
    }
 
+   /**
+    * Computes the Hoover index, also known as the Pietra index or the Schutz index
+    * @param values the values for which the Hoover index must be computed
+    * @return the Hoover index of the given values
+    */
+   def hoover(values: Iterable[Double]): Double =
+   {
+      val relative_earners = 1.0 / values.size
+      val total = values.sum
+
+      values.map(y => math.abs((y/total) - relative_earners)).sum / 2.0
+   }
+
 
 
    def mean(values: Iterable[Double]): Double = values.sum / values.size
