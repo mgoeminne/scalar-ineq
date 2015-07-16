@@ -60,4 +60,22 @@ package object ineq
          1.0 - (1.0/mean) * math.pow( values.map(y => math.pow(y, 1.0 - parameter)).sum / values.size, (1.0 / (1.0 - parameter)))
    }
 
+   /**
+    * Computes the generalized entropy index for some given values.
+    * https://en.wikipedia.org/wiki/Generalized_entropy_index
+    * @param values the values for which the Gini index must be computed
+    * @param alpha the weight given to distances between incomes at different parts of the income distribution.
+    * @return the generalized entropy index of the given values
+    */
+   def entropy(values: Iterable[Double], alpha: Double = 0.5): Double =
+   {
+      val mean = values.sum / values.size
+
+      alpha match
+      {
+         case 0.0 => -(1.0 / values.size) * values.map(y => math.log(y / mean)).sum
+         case 1.0 => values.map(y => (y / mean) * math.log(y / mean)).sum / values.size
+         case _   => values.map(y => math.pow((y / mean), alpha) - 1).sum / (values.size * alpha * (alpha - 1))
+      }
+   }
 }

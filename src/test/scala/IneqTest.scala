@@ -33,6 +33,13 @@ class IneqTest extends FlatSpec with Matchers
       ineq.atkinson(CRAN_VECTOR, 0.4) shouldBe (0.1440938) +- EPSILON
    }
 
+   it should "have the right generalized entropy index" in {
+      ineq.entropy(CRAN_VECTOR, 0.5) shouldBe (0.3770931) +- EPSILON
+      ineq.entropy(CRAN_VECTOR, 1) shouldBe (0.3623412) +- EPSILON
+      ineq.entropy(CRAN_VECTOR, 0) shouldBe (0.4335946) +- EPSILON
+      ineq.entropy(CRAN_VECTOR, 0.723) shouldBe (0.3663712) +- EPSILON
+   }
+
    "The Atkinson index, with a parameter of 0" should "be 0" in {
       ineq.atkinson(CRAN_VECTOR, 0.0) shouldBe (0.0) +- EPSILON
       ineq.atkinson(Seq.fill(50)(Random.nextDouble()), 0.0) shouldBe (0.0) +- EPSILON
