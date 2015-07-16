@@ -40,6 +40,14 @@ class IneqTest extends FlatSpec with Matchers
       ineq.entropy(CRAN_VECTOR, 0.723) shouldBe (0.3663712) +- EPSILON
    }
 
+   it should "have the right coefficient of variation" in {
+      ineq.var_coef(CRAN_VECTOR) shouldBe (0.9169582) +- EPSILON
+   }
+
+   it should "have the right squared coefficient of variation" in {
+      ineq.square_var_coef(CRAN_VECTOR) shouldBe (0.8408123) +- EPSILON
+   }
+
    "Atkinson index, with a parameter of 0" should "be 0" in {
       ineq.atkinson(CRAN_VECTOR, 0.0) shouldBe (0.0) +- EPSILON
       ineq.atkinson(Seq.fill(50)(Random.nextDouble()), 0.0) shouldBe (0.0) +- EPSILON

@@ -29,7 +29,7 @@ package object ineq
    /**
     * Computes the Theil index for some given values.
     * https://en.wikipedia.org/wiki/Theil_index
-    * @param values the values for which the Gini index must be computed
+    * @param values the values for which the Theil index must be computed
     * @return the Theil index associated to the given values
     */
    def theil(values: Iterable[Double]): Double =
@@ -50,7 +50,7 @@ package object ineq
    /**
     * Computes the Atkinson's index for some given values.
     * https://en.wikipedia.org/wiki/Atkinson_index
-    * @param values the values for which the Gini index must be computed
+    * @param values the values for which the Atkinson index must be computed
     * @param parameter a coefficient expressing the "inequality aversion". If 0, no aversion to inequality is considered,
     *                  and the index equals to 0.
     *                  As the coefficient value increases, the social utility gained by a total redistribution increases.
@@ -58,30 +58,58 @@ package object ineq
     */
    def atkinson(values: Iterable[Double], parameter: Double = 0.5): Double =
    {
-      val mean = values.sum / values.size
+      val m = mean(values)
 
       if(parameter == 1)
-         1.0 - (1.0/mean) * math.pow(values.product , (1.0 / values.size))
+         1.0 - (1.0/m) * math.pow(values.product , (1.0 / values.size))
       else
-         1.0 - (1.0/mean) * math.pow( values.map(y => math.pow(y, 1.0 - parameter)).sum / values.size, (1.0 / (1.0 - parameter)))
+         1.0 - (1.0/m) * math.pow( values.map(y => math.pow(y, 1.0 - parameter)).sum / values.size, (1.0 / (1.0 - parameter)))
    }
 
    /**
     * Computes the generalized entropy index for some given values.
     * https://en.wikipedia.org/wiki/Generalized_entropy_index
-    * @param values the values for which the Gini index must be computed
+    * @param values the values for which the generalized entropy index must be computed
     * @param alpha the weight given to distances between incomes at different parts of the income distribution.
     * @return the generalized entropy index of the given values
     */
    def entropy(values: Iterable[Double], alpha: Double = 0.5): Double =
    {
-      val mean = values.sum / values.size
+      val m = mean(values)
 
       alpha match
       {
-         case 0.0 => -(1.0 / values.size) * values.map(y => math.log(y / mean)).sum
-         case 1.0 => values.map(y => (y / mean) * math.log(y / mean)).sum / values.size
-         case _   => values.map(y => math.pow((y / mean), alpha) - 1).sum / (values.size * alpha * (alpha - 1))
+         case 0.0 => -(1.0 / values.size) * values.map(y => math.log(y / m)).sum
+         case 1.0 => values.map(y => (y / m) * math.log(y / m)).sum / values.size
+         case _   => values.map(y => math.pow((y / m), alpha) - 1).sum / (values.size * alpha * (alpha - 1))
       }
    }
+
+   /**
+    * Computes the coefficient of variation, which is defined as the ratio of the standard deviation to the mean.
+    * https://en.wikipedia.org/wiki/Coefficient_of_variation
+    * @param values the values for which the coefficient of variation must be computed
+    * @return the coefficient of variation for the given values
+    */
+   def var_coef(values: Iterable[Double]): Double =
+   {
+      val m = mean(values)
+      val variance = mean(values.map(y => (y-m)*(y-m)))
+      val sd = math.sqrt(variance)
+      sd / m
+   }
+
+   /**
+    * Computes the squared coefficient of variation.
+    * @param values the values for which the squared coefficient of variation must be computed
+    * @return the squared coefficient of variation for the given values
+    */
+   def square_var_coef(values: Iterable[Double]): Double = {
+      val vc = var_coef(values)
+      vc * vc
+   }
+
+
+
+   def mean(values: Iterable[Double]): Double = values.sum / values.size
 }
