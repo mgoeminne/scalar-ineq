@@ -13,14 +13,11 @@ class IneqTest extends FlatSpec with Matchers
    }
 
    "The vector given in R doc" should "have the right Gini index" in{
-
       ineq.gini(CRAN_VECTOR) shouldBe (0.4620911) +- EPSILON
-
    }
 
    it should "have the right corrected Gini index" in{
-      val x = Seq(541, 1463, 2445, 3438, 4437, 5401, 6392, 8304, 11904, 22261).map(_.toDouble)
-      ineq.gini(x, false) shouldBe (0.5134346) +- EPSILON
+      ineq.gini(CRAN_VECTOR, false) shouldBe (0.5134346) +- EPSILON
    }
 
    it should "have the right Theil index" in {
