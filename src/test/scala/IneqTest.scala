@@ -56,6 +56,11 @@ class IneqTest extends FlatSpec with Matchers
       ineq.kolm(CRAN_VECTOR,1) shouldBe Double.PositiveInfinity
    }
 
+   it should "have the right concentration ratio, according to QuickMBA" in
+   {
+      ineq.concentration_ratio(CRAN_VECTOR) shouldBe (0.73380290151083) +- EPSILON
+   }
+
    "Atkinson index, with a parameter of 0" should "be 0" in {
       ineq.atkinson(CRAN_VECTOR, 0.0) shouldBe (0.0) +- EPSILON
       ineq.atkinson(Seq.fill(50)(Random.nextDouble()), 0.0) shouldBe (0.0) +- EPSILON

@@ -169,6 +169,23 @@ package object ineq
       }
    }
 
+   /**
+    * Computes the concentration ratio of a market shared. It is defined as the
+    * marked share owned by the largest _m_ firms, where m is a parameter.
+    *
+    * - For m=4, a result below 0.40 indicates a very competitive market.
+    * - For m=1, a result above 0.9 indicates an effective monopoly.
+    *
+    * @param values the market shares of each firm
+    * @param m the number of firms to take into account in the ratio
+    * @return the concentration ratio of the largest _m_firms. If m >= values.size, 1 is returned.
+    */
+   def concentration_ratio(values: Iterable[Double], m: Int = 4): Double =
+   {
+      if(m >= values.size) 1
+      else values.toList.sorted.reverse.take(m).sum / values.sum
+   }
+
 
 
    private def mean(values: Iterable[Double]): Double = values.sum / values.size
