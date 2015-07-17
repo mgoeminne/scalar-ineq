@@ -104,7 +104,7 @@ package object ineq
     * @param values the values for which the squared coefficient of variation must be computed
     * @return the squared coefficient of variation for the given values
     */
-   def square_var_coef(values: Iterable[Double]): Double = {
+   def squared_var_coef(values: Iterable[Double]): Double = {
       val vc = var_coef(values)
       vc * vc
    }

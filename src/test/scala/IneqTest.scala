@@ -45,7 +45,7 @@ class IneqTest extends FlatSpec with Matchers
    }
 
    it should "have the right squared coefficient of variation" in {
-      ineq.square_var_coef(CRAN_VECTOR) shouldBe (0.8408123) +- EPSILON
+      ineq.squared_var_coef(CRAN_VECTOR) shouldBe (0.8408123) +- EPSILON
    }
 
    it should "have the right Hoover index" in {
