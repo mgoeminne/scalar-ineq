@@ -134,6 +134,41 @@ package object ineq
       math.log(mean(values.map(y => math.exp(k*(mean(values) - y))))) / k
    }
 
+   /**
+    * Computes the Herfindahl concentration index within values according to the specified concentration measure.
+    * https://en.wikipedia.org/wiki/Herfindahl_index
+    *
+    * - A result below 0.01 indicates a highly competitive index.
+    * - A result below 0.15 indicates an unconcentrated index.
+    * - A result between 0.15 to 0.25 indicates moderate concentration.
+    * - A result above 0.25 indicates high concentration.
+    *
+    * @param values     the values for which the Herfindahl index must be computed
+    * @param parameter  parameter of the concentration
+    * @return the Herfindahl concentration index for the given values, a value between 1/N and 1, where N is the size of _values_
+    */
+   def herfindahl(values: Iterable[Double], parameter: Double = 1): Double =
+   {
+      // TODO: On CRAN ineq, the result is powered by (1/parameter). Why?
+      values.map(y => math.pow((y / values.sum), parameter+1)).sum
+   }
+
+   /**
+    * Computes the normalized Herfindahl concentration index within values according to the specified concetration measure.
+    *
+    * @param values     the values for which the Herfindahl index must be computed
+    * @param parameter  parameter of the concentration
+    * @return           the normalized Herfindahl concentration index for the given values, a value between 0 and 1
+    */
+   def normalized_herfindahl(values: Iterable[Double], parameter: Double = 1): Double =
+   {
+      values.size match
+      {
+         case 1 => 1
+         case _ => (herfindahl(values, parameter) - (1.0/values.size)) / (1.0 - 1.0 / values.size)
+      }
+   }
+
 
 
    private def mean(values: Iterable[Double]): Double = values.sum / values.size

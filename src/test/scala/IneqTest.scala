@@ -66,9 +66,28 @@ class IneqTest extends FlatSpec with Matchers
       assert( ineq.normalized_theil(CRAN_VECTOR) <= 1)
    }
 
+   "Herfindahl index" should "be right, according to Wikipedia EN" in {
+      ineq.herfindahl(Seq(15,15,15,15,15,15,1,1,1,1,1,1,1,1,1,1)) shouldBe (0.136) +- 0.001
+      ineq.herfindahl(Seq(80,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1)) shouldBe (0.643) +- 0.001
+   }
 
+   "Herfindahl index of a single value" should "be 1" in
+   {
+      ineq.herfindahl(Seq(42)) shouldBe 1.0 +- EPSILON
+   }
 
+   "Herfindahl index of perfectly distributed values" should "be 1/N" in
+   {
+      ineq.herfindahl(Seq(42,42,42,42,42)) shouldBe 0.2 +- EPSILON
+   }
 
+   "Normalized Herfindahl index of perfectly concentrated values" should "be 1" in
+   {
+      ineq.normalized_herfindahl(Seq(42,0,0,0,0)) shouldBe 1.0 +- EPSILON
+   }
 
-
+   "Normalized Herfindahl index of perfectly distributed values" should "be 0" in
+   {
+      ineq.normalized_herfindahl(Seq(42,42,42,42,42)) shouldBe 0.0 +- EPSILON
+   }
 }
