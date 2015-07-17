@@ -52,6 +52,10 @@ class IneqTest extends FlatSpec with Matchers
       ineq.hoover(CRAN_VECTOR) shouldBe (0.3378067) +- EPSILON
    }
 
+   it should "have the right Kolm index" in {
+      ineq.kolm(CRAN_VECTOR,1) shouldBe Double.PositiveInfinity
+   }
+
    "Atkinson index, with a parameter of 0" should "be 0" in {
       ineq.atkinson(CRAN_VECTOR, 0.0) shouldBe (0.0) +- EPSILON
       ineq.atkinson(Seq.fill(50)(Random.nextDouble()), 0.0) shouldBe (0.0) +- EPSILON

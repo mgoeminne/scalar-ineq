@@ -122,7 +122,19 @@ package object ineq
       values.map(y => math.abs((y/total) - relative_earners)).sum / 2.0
    }
 
+   /**
+    * Computes the Kolm index
+    * https://de.wikipedia.org/wiki/Kolm-Index
+    * @param values the values for which the Kolm index must be computed
+    * @param k the inequality aversion, must be strictly greater than 0
+    * @return the Kolm index of the given values
+    */
+   def kolm(values: Iterable[Double], k: Double = 1): Double =
+   {
+      math.log(mean(values.map(y => math.exp(k*(mean(values) - y))))) / k
+   }
 
 
-   def mean(values: Iterable[Double]): Double = values.sum / values.size
+
+   private def mean(values: Iterable[Double]): Double = values.sum / values.size
 }
