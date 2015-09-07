@@ -1,5 +1,8 @@
 # scalar-ineq
-Tools for measuring inequality, concentration and poverty 
+Tools for measuring inequality, concentration and poverty.
+ 
+[![Build Status](https://travis-ci.org/mgoeminne/scalar-scholar.svg?branch=master)](https://travis-ci.org/mgoeminne/scalar-ineq)
+
 
 This is a free Scala implementation of the ineq package available on CRAN.
 
