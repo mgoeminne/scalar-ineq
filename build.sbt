@@ -1,8 +1,14 @@
+// addSbtPlugin("com.typesafe.sbt" % "sbt-pgp" % "0.8")
+
 name := "ineq"
 
-version := "1.0"
+organization := "org.scalar-project"
+
+version := "1.2.1"
 
 scalaVersion := "2.11.7"
+
+coverageEnabled := true
 
 publishMavenStyle := true
 
@@ -14,9 +20,13 @@ publishTo := {
       Some("releases"  at nexus + "service/local/staging/deploy/maven2")
 }
 
+sonatypeProfileName := "mgoeminne"
+
 publishArtifact in Test := false
 
 pomIncludeRepository := { _ => false }
+
+credentials += Credentials(Path.userHome / ".sbt" / "0.13" / "sonatype.sbt")
 
 pomExtra := (
    <url>https://github.com/mgoeminne/scalar-ineq</url>
